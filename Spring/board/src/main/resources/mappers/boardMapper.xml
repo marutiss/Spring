@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mappers.board">
+
+
+<!-- 미니 게시판 등록 -->
+<insert id="write" parameterType="com.board.domain.BoardVO">
+	insert into tbl_board (writer, title, content, filename, filesize) values (#{writer}, #{title}, #{content}, #{filename}, #{filesize})
+</insert>
+
+<!-- 미니 게시판 목록 -->
+<select id="list" resultType="com.board.domain.BoardVO">
+	select seqno, writer, title, to_char(regdate,'YYYY-MM-DD') as regdate from tbl_board order by seqno desc
+</select>
+
+<!-- 미니 게시판 목록 보기-->
+<select id="view" parameterType="int" resultType="com.board.domain.BoardVO">
+	SELECT seqno, writer, title, to_char(regdate,'YYYY-MM-DD') as regdate, content, filename, filesize FROM tbl_board WHERE seqno = #{seqno}
+</select>
+
+<!-- 미니 게시판 수정 -->
+<update id="modify" parameterType="com.board.domain.BoardVO">
+	update tbl_board set writer = #{writer}, title = #{title}, content = #{content} where seqno = #{seqno}
+</update>
+
+<!-- 미니 게시판 삭제 -->
+<delete id="delete" parameterType="int">
+	delete from tbl_board where seqno = #{seqno}
+</delete>
+
+<!-- 미니 게시판 댓글 입력 -->
+<insert id="ReplyInsert" parameterType="com.board.domain.BoardVO">
+	INSERT INTO tbl_reply (seqno, replywriter, replycontent, replyregdate) VALUES (#{seqno}, #{replywriter}, #{replycontent}, #{replyregdate})
+</insert>
+
+<!-- 미니 게시판 댓글 목록 가져 오기 -->
+<select id="ReplyList" parameterType="int" resultType="com.board.domain.BoardVO">
+	SELECT replyseqno, seqno, replywriter, replycontent FROM tbl_reply WHERE seqno= #{seqno}
+
+</select>
+
+</mapper>
