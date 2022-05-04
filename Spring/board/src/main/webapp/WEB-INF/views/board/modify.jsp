@@ -10,16 +10,14 @@ $(document).ready(function(){
 	
 	$("#btn_modify").click(function(){
 		
-		if($("#mwriter").val()=="") { alert("이름을 입력하세요!!!"); $("#mwriter").focus(); return false;  }
-		if($("#mtitle").val()=="") { alert("제목을 입력하세요!!!");  $("#mtitle").focus(); return false;  }
-		if($("#mcontent").val()=="") { alert("내용을 입력하세요!!!");  $("#mcontent").focus(); return false;  }
+		if($("#writer").val()=="") { alert("이름을 입력하세요!!!"); $("#writer").focus(); return false;  }
+		if($("#title").val()=="") { alert("제목을 입력하세요!!!");  $("#title").focus(); return false;  }
+		if($("#content").val()=="") { alert("내용을 입력하세요!!!");  $("#content").focus(); return false;  }
 		
-		console.log("mwriter = " + $("#mwriter").val());
-		console.log("mtitle = " + $("#mtitle").val());
-		console.log("mcontent = " + $("#mcontent").val());
 		
-		$("#ModifyForm").attr("action", "/miniBoard/mModify").submit();
-	
+		
+		$("#ModifyForm").attr("action", "/board/modify").submit();
+
 	}) //End of $("btn_write")
 
 }) //End of $(document).ready(function)
@@ -52,7 +50,7 @@ a:active { color: red; }
   border-radius: 30px;
 }
 
-#mwriter, #mtitle {
+#writer, #title {
   width: 90%;
   border:none;
   border-bottom: 2px solid #adadad;
@@ -65,7 +63,7 @@ a:active { color: red; }
   background: none;
 }
 
-#mcontent{
+#content{
   width: 850px;
   height: 300px;
   padding: 10px;
@@ -107,10 +105,10 @@ a:active { color: red; }
 
 <form id="ModifyForm" class="ModifyForm" method="POST">
 
-	<input type="text" id="mwriter" name="mwriter" value="${list.mwriter}">
-	<input type="text" id="mtitle" name="mtitle" value="${list.mtitle}" >
+	<input type="text" id="writer" name="writer" value="${list.writer}">
+	<input type="text" id="title" name="title" value="${list.title}" >
 	<input type="hidden" name="seqno" value="${list.seqno}">
-	<textarea id="mcontent" cols="100" row="500" name="mcontent">${list.mcontent}</textarea>
+	<textarea id="content" cols="100" row="500" name="content">${list.content}</textarea>
 	<button id="btn_modify" class="btn_modify">수정</button>
 </form>
 

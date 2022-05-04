@@ -12,7 +12,7 @@
 </h1>
 
 
-<ul><a href="/board/list">게시판 목록 보기</a></ul>
+<ul><a href="/board/list?num=1">게시판 목록 보기</a></ul>
 <ul><a href="/board/write">게시판 내용 등록</a></ul>
 
 

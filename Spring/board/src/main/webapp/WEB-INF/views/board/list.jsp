@@ -73,7 +73,7 @@ a:active { color: red; }
  		<tbody>
 			<c:forEach items="${list}" var="list"> <!-- for문 -->
  				<tr onMouseover="this.style.background='#46D2D2';" onmouseout="this.style.background='white';">
-  					<td>${list.seqno}</td>
+  					<td>${list.seq}</td>
   					<td style="text-align:left;"><a id="hypertext" href="/board/view?seqno=${list.seqno}" onMouseover='this.style.textDecoration="underline"'  
   							onmouseout="this.style.textDecoration='none';">${list.title}</a></td>
   					<td>${list.writer}</td>
@@ -83,7 +83,25 @@ a:active { color: red; }
 		</tbody>
 
 	</table>
-	<p style="text-align: center">[ <a href="/board/write">글쓰기</a> ]</p>
+	<br>
+
+	<div>
+  		<select id="searchType" name="searchType">
+      		<option value="title">제목</option>
+      		<option value="content">내용</option>
+      		<option value="title_content">제목+내용</option>
+      		<option value="writer">작성자</option>
+  		</select>
+    	<input type="text" id="keyword" name="keyword" />
+  		<button type="button" onclick="search()">검색</button>
+ 	</div>
+<br><br>	
+	<div>
+	[페이지] ${pageList}<br>
+
+	</div>
+	
+	<p style="text-align: center">[ <a href="/board/list?num=1">처음으로</a> | <a href="/board/write">글쓰기</a> ]</p>
 </div>
 </body>
 </html>

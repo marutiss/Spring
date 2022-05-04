@@ -11,8 +11,102 @@
 </insert>
 
 <!-- 미니 게시판 목록 -->
-<select id="list" resultType="com.board.domain.BoardVO">
-	select seqno, writer, title, to_char(regdate,'YYYY-MM-DD') as regdate from tbl_board order by seqno desc
+<select id="list" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+	select @rownum:=@rownum+1 as seq, seqno, writer, title, to_char(regdate,'YYYY-MM-DD') as mregDate from (select @rownum:=0) a, tbl_board b 
+		
+		<if test='searchType.equals("title")'>
+			where title like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("content")'>
+			where content like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("title_content")'>
+			where title like concat('%', #{keyword}, '%') or
+				content like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("writer")'>
+			where writer like concat('%', #{keyword}, '%')
+		</if>
+   
+   	order BY seqno desc limit #{displayPost}, #{postNum}
+	
+	
+</select>
+
+<!-- 게시물 총 갯수 -->
+<select id="count" parameterType="hashMap" resultType="int">
+ 		select count(seqno) from tbl_board
+  
+ 		<if test='searchType.equals("title")'>
+			where title like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("content")'>
+			where content like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("mtitle_mcontent")'>
+			where title like concat('%', #{keyword}, '%') or
+				content like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("writer")'>
+			where writer like concat('%', #{keyword}, '%')
+		</if>
+ 
+</select>
+
+<!-- 게시물 이전 페이지 -->
+<select id="viewPrev" parameterType="hashMap" resultType="int">
+   <![CDATA[
+   	select ifnull(max(seqno),0) from tbl_board where seqno < #{seqno}  
+	]]>	
+	
+		<if test='searchType.equals("title")'>	
+			and title like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("content")'>
+			and content like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("title_content")'>
+			and (title like concat('%', #{keyword}, '%') or
+				content like concat('%', #{keyword}, '%')  
+		</if>
+		
+		<if test='searchType.equals("writer")'>
+			and writer like concat('%', #{keyword}, '%')
+		</if> 	
+   
+</select>
+
+<!-- 게시물 다음 페이지 -->
+<select id="viewNext" parameterType="hashMap" resultType="int">
+   <![CDATA[
+   	select ifnull(min(seqno),0) from tbl_board where seqno > #{seqno} 
+   	
+   ]]>	
+   		<if test='searchType.equals("title")'>
+			and title like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("content")'>
+			and content like concat('%', #{keyword}, '%')
+		</if>
+		
+		<if test='searchType.equals("title_content")'>
+			and (title like concat('%', #{keyword}, '%') or
+				content like concat('%', #{keyword}, '%') 
+		</if>
+		
+		<if test='searchType.equals("writer")'>
+			and writer like concat('%', #{keyword}, '%')
+		</if>   	
+
 </select>
 
 <!-- 미니 게시판 목록 보기-->
@@ -31,12 +125,12 @@
 </delete>
 
 <!-- 미니 게시판 댓글 입력 -->
-<insert id="ReplyInsert" parameterType="com.board.domain.BoardVO">
-	INSERT INTO tbl_reply (seqno, replywriter, replycontent, replyregdate) VALUES (#{seqno}, #{replywriter}, #{replycontent}, #{replyregdate})
+<insert id="replyinsert" parameterType="com.board.domain.ReplyVO">
+	INSERT INTO tbl_reply (seqno, replywriter, replycontent ) VALUES (#{seqno}, #{replywriter}, #{replycontent})
 </insert>
 
 <!-- 미니 게시판 댓글 목록 가져 오기 -->
-<select id="ReplyList" parameterType="int" resultType="com.board.domain.BoardVO">
+<select id="replylist" parameterType="int" resultType="com.board.domain.ReplyVO">
 	SELECT replyseqno, seqno, replywriter, replycontent FROM tbl_reply WHERE seqno= #{seqno}
 
 </select>

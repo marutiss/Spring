@@ -34,5 +34,13 @@
 <context:component-scan base-package="com.board.dao" />
 <context:component-scan base-package="com.board.service" />
 <context:component-scan base-package="com.board.util" />
+
+<!-- MultipartResolver 설정 시작--> 
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+		<property name="maxUploadSize" value="1073700000" /> 
+		<property name="maxInMemorySize" value="104857600" />
+	</bean> 
+<!-- MultipartResolver 설정 끝--> 
+
 		
 </beans>

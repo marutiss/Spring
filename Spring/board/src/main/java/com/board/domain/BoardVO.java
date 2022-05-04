@@ -3,13 +3,25 @@ package com.board.domain;
 public class BoardVO {
 	
 	private int seqno;
+	private int seq;
 	private String writer;
 	private String title;
 	private String regdate;
 	private String filename;
-	private int filesize;
+	private String content;
+	private long filesize;
+	public int getSeq() {
+		return seq;
+	}
+	
 	public int getSeqno() {
 		return seqno;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public void setSeqno(int seqno) {
 		this.seqno = seqno;
@@ -38,10 +50,10 @@ public class BoardVO {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-	public int getFilesize() {
+	public long getFilesize() {
 		return filesize;
 	}
-	public void setFilesize(int filesize) {
+	public void setFilesize(long filesize) {
 		this.filesize = filesize;
 	}
 	

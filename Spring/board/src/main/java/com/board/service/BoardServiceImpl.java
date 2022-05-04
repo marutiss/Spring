@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.board.domain.BoardVO;
+import com.board.domain.ReplyVO;
 import com.board.dao.BoardDAO;
 
 @Service
@@ -21,13 +22,30 @@ public class BoardServiceImpl implements BoardService {
 
 	}
 
-	//게시판 게시물목록
-	@Override
-	public List<BoardVO> list(BoardVO vo) throws Exception {
-		return dao.list(vo);
-	}
+	//미니 게시판 게시물 목록 보기
+		public List<BoardVO> list(int displayPost, int postNum, String searchType, String keyword) throws Exception {
+			return dao.list(displayPost, postNum, searchType, keyword);
+		}
 
-	//게시판 게시물 등록
+		//게시물 전체 갯수
+		@Override
+		public int count(String searchType, String keyword) throws Exception {
+			return dao.count(searchType, keyword);
+		}
+
+		//게시물 이전 페이지
+		@Override
+		public int viewPrev(int seqno,String searchType,String keyword) throws Exception {
+			return dao.viewPrev(seqno,searchType,keyword);
+		}
+
+		//게시물 다음 페이지
+		@Override
+		public int viewNext(int seqno,String searchType,String keyword) throws Exception {
+			return dao.viewNext(seqno,searchType,keyword);
+		}
+
+	//게시판 게시물 수정
 	@Override
 	public void modify(BoardVO vo) throws Exception {
 		dao.modify(vo);
@@ -49,15 +67,16 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시판 댓글입력
 	@Override
-	public void ReplyInsert(BoardVO vo) throws Exception {
-		dao.ReplyInsert(vo);
+	public void replyinsert(ReplyVO vo) throws Exception {
+		dao.replyinsert(vo);
 
 	}
 
 	//게시판 댓글 목록
-	@Override
-	public List<BoardVO> ReplyList(int seqno) throws Exception {
-		return dao.ReplyList(seqno);
-	}
+		public List<ReplyVO> replylist(int seqno) throws Exception{
+			return dao.replylist(seqno);
+		}
+
+		
 
 }

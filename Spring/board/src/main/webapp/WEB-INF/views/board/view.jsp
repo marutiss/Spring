@@ -34,7 +34,7 @@ a:active { color: red; }
   border-radius: 20px;
 }
 
-.mwriter, .mtitle, .mregDate, .mcontent, .filename {
+.writer, .title, .regdate, .content, .filename {
   width: 90%;
   height:25px;
   outline:none;
@@ -103,15 +103,15 @@ a:active { color: red; }
 $(document).ready(function(){
 	
 	$("#btn_modify").click(function(){
-			location.href="/miniBoard/mModify?seqno=${list.seqno}"
+			location.href="/board/modify?seqno=${list.seqno}"
 	}) //End of $("btn_modify")
 
 	$("#btn_delete").click(function(){
 		if(confirm("정말로 삭제하시겠습니까?") == true)
-			location.href="/miniBoard/mDelete?seqno=${list.seqno}"
+			location.href="/board/delete?seqno=${list.seqno}"
     }) //End of $("btn_delete")
 	
-    $("#btn_mreply").click(function(){
+    $("#btn_reply").click(function(){
     	replyRegister();	
     }) //End of $("#btn_mreply")
 	
@@ -120,11 +120,11 @@ $(document).ready(function(){
 
 function replyRegister() { //form 데이터 전송 --> 반드시 serialize()를 해야 한다.
 	
-	if($("#replyContent").val() == "") {alert("댓글을 입력하세요."); $("#replyContent").focus();return false;}
+	if($("#replycontent").val() == "") {alert("댓글을 입력하세요."); $("#replycontent").focus();return false;}
 	
 	var queryString = $("form[name=formReply]").serialize();
 	$.ajax({
-		url : "/miniBoard/mReply?option=I",
+		url : "/board/reply?option=I",
 		type : "post",
 		dataType : "json",
 		data : queryString,
@@ -134,7 +134,8 @@ function replyRegister() { //form 데이터 전송 --> 반드시 serialize()를 
               	    	return false;
 				}
 	}); //End of ajax
-	$("#replyContent").val("");	
+	$("#replycontent").val("");
+	$("#replywriter").val("");
 }
 
 function replyList(list){
@@ -145,7 +146,7 @@ function replyList(list){
 		result += "<div id='replyListView'>";
 			result += "작성자 : " + item["replywriter"];
 			result += "<div style='width:40%; height: auto; border-top: 1px solid gray; overflow: auto;'>";
-			result += "<pre>" + item["replyContent"] + "</pre></div>";
+			result += "<pre>" + item["replycontent"] + "</pre></div>";
 			result += "</div>";
 			result += "</div><br>";
 	})
@@ -157,7 +158,7 @@ function startupPage(){
 	
 	var queryString = { "seqno": ${list.seqno} };
 	$.ajax({
-		url : "/miniBoard/mReply?option=L",
+		url : "/board/reply?option=L",
 		type : "post",
 		dataType : "json",
 		data : queryString,
@@ -171,7 +172,7 @@ function startupPage(){
 
 function fileDownload(){
 	
-	location.href="/miniBoard/fileDownload?seqno=${list.seqno}"
+	location.href="/board/fileDownload?seqno=${list.seqno}"
 }
 
 </script>
@@ -184,10 +185,10 @@ function fileDownload(){
 	<h1>게시물 내용 보기</h1>
 	<br>
 	<div class="boardView">
-		<div class="mwriter">이름 : ${list.mwriter}</div>
-		<div class="mtitle">제목 : ${list.mtitle}</div>
-		<div class="mregDate">날짜 : ${list.mregDate}</div>
-		<div class="textArea"><pre>${list.mcontent}</pre></div>
+		<div class="writer">이름 : ${list.writer}</div>
+		<div class="title">제목 : ${list.title}</div>
+		<div class="regdate">날짜 : ${list.regdate}</div>
+		<div class="textArea"><pre>${list.content}</pre></div>
 		<div class="filename">파일명 : <a href="javascript:fileDownload()">${list.filename}</a></div>
 		<center><div><button class="btn_modify" id="btn_modify">수정</button> 
 		<button class="btn_delete" id="btn_delete">삭제</button></div></center>
@@ -198,10 +199,10 @@ function fileDownload(){
 	<p id="replyNotice">댓글을 작성해 주세요</p>
 	<form id="formReply" name="formReply" method="POST"> 
 		작성자 : <input type="text" id="replywriter" name="replywriter"><br>
-    	<textarea id='replyContent' name='replyContent' cols='80' rows='5' maxlength='150' placeholder='글자수:150자 이내'></textarea><br>
+    	<textarea id='replycontent' name='replycontent' cols='80' rows='5' maxlength='150' placeholder='글자수:150자 이내'></textarea><br>
     	<input type="hidden" name="seqno" value="${list.seqno}">
 	</form>
-	<button id="btn_mreply">댓글등록</button>
+	<button id="btn_reply">댓글등록</button>
 	<hr>
 	
 	<div id="replyList" style="width:100%; height:600px; overflow:auto;">

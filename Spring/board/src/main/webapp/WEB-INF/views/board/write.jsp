@@ -10,11 +10,11 @@ $(document).ready(function(){
 	
 	$("#btn_write").click(function(){
 		
-		if($("#mwriter").val()=="") { alert("이름을 입력하세요!!!"); $("#mwriter").focus(); return false;  }
-		if($("#mtitle").val()=="") { alert("제목을 입력하세요!!!");  $("#mtitle").focus(); return false;  }
-		if($("#mcontent").val()=="") { alert("내용을 입력하세요!!!");  $("#mcontent").focus(); return false;  }
+		if($("#writer").val()=="") { alert("이름을 입력하세요!!!"); $("#writer").focus(); return false;  }
+		if($("#title").val()=="") { alert("제목을 입력하세요!!!");  $("#title").focus(); return false;  }
+		if($("#content").val()=="") { alert("내용을 입력하세요!!!");  $("#content").focus(); return false;  }
 		
-		$("#WriteForm").attr("action", "/miniBoard/mWrite").submit();
+		$("#WriteForm").attr("action", "/board/write").submit();
 	
 	}) //End of $("btn_write")
 
@@ -47,7 +47,7 @@ a:active { color: red; }
   border-radius: 30px;
 }
 
-#mwriter, #mtitle {
+#writer, #title {
   width: 90%;
   border:none;
   border-bottom: 2px solid #adadad;
@@ -60,7 +60,7 @@ a:active { color: red; }
   background: none;
 }
 
-#mcontent{
+#content{
   width: 850px;
   height: 300px;
   padding: 10px;
@@ -95,16 +95,16 @@ a:active { color: red; }
 <body>
 
 <div>
-	<img id="topBanner" src ="/resources/images/logo.jpg" title="서울기술교육센터" >
+	<img id="topBanner" src ="/resources/Images/logo.jpg" title="서울기술교육센터" >
 </div>
 
 	<h1>게시물 등록</h1>
 	<br>
 
 <form id="WriteForm" class="WriteForm" method="POST" enctype="multipart/form-data">
-	<input type="text" id="mwriter" name="mwriter"  placeholder="여기에 이름을 입력하세요">
-	<input type="text" id="mtitle" name="mtitle"  placeholder="여기에 제목을 입력하세요">
-	<textarea id="mcontent" cols="100" row="500" name="mcontent" placeholder="여기에 내용을 입력하세요"></textarea>
+	<input type="text" id="writer" name="writer"  placeholder="여기에 이름을 입력하세요">
+	<input type="text" id="title" name="title"  placeholder="여기에 제목을 입력하세요">
+	<textarea id="content" cols="100" row="500" name="content" placeholder="여기에 내용을 입력하세요"></textarea>
 	<br>
 	<input type="file" name="uploadFile">
 	<br>
