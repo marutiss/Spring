@@ -69,6 +69,43 @@ a:active { color: red; }
   resize: both;
 }
 
+.btn_modify  {
+  position:relative;
+  left:20%;
+  transform: translateX(-50%);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width:40%;
+  height:40px;
+  background: red;
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}
+
+.btn_delete  {
+  position:relative;
+  left:20%;
+  transform: translateX(-50%);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width:40%;
+  height:40px;
+  background: pink;
+  background-position: left;
+  background-size: 200%;
+  color:white;
+  font-weight: bold;
+  border:none;
+  cursor:pointer;
+  transition: 0.4s;
+  display:inline;
+}
 
 .bottom_menu { margin-top: 20px; }
 
@@ -91,17 +128,16 @@ a:active { color: red; }
 
 $(document).ready(function(){
 	
-    $("#btn_mreply").click(function(){
+    $("#btn_reply").click(function(){
     	replyRegister();	
     }) //End of $("#btn_mreply")
 	
 	
 }) //End of $(document).ready(function)
 
-function ndelete(){
-	System.out.println("1111111111111111");
+function mDelete(){
 	if(confirm("정말 삭제 하시겠습니까?")==true) location.href='/board/delete?seqno=${list.seqno}'
-} 
+}
 	
 	
 
@@ -140,6 +176,7 @@ function replyList(list){
 	})
 	$("#replyListView").remove();
 	$("#replyList").html(result);
+	$("replywriter").html("${username}")
 }
 
 function startupPage(){
@@ -204,7 +241,7 @@ function fileDownload(){
 				<a href="/board/modify?seqno=${list.seqno}&num=${num}&searchType=${searchType}&keyword=${keyword}" onMouseover="this.style.textDecoration='underline';" 
 						onmouseout="this.style.textDecoration='none';">글 수정</a> &nbsp;&nbsp;
 					
-				<a href="javascript: ndelete()" onMouseover="this.style.textDecoration='underline';" 
+				<a href="javascript:mDelete()" onMouseover="this.style.textDecoration='underline';" 
 						onmouseout="this.style.textDecoration='none';">글 삭제</a> &nbsp;&nbsp;
 			</c:if>
 	</div>

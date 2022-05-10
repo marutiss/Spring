@@ -13,7 +13,9 @@
 <!-- 미니 게시판 목록 -->
 <select id="list" parameterType="hashMap" resultType="com.board.domain.BoardVO">
 	select @rownum:=@rownum+1 as seq, seqno, writer, title, to_char(regdate,'YYYY-MM-DD') as mregdate, viewcnt from (select @rownum:=0) a, tbl_board b 
+		<!-- 순서대로 간섭하는 sql문 -->
 		
+		<!-- my batis에 쓰이는 부분 -->
 		<if test='searchType.equals("title")'>
 			where title like concat('%', #{keyword}, '%')
 		</if>
@@ -86,6 +88,7 @@
 
 <!-- 게시물 다음 페이지 -->
 <select id="viewNext" parameterType="hashMap" resultType="int">
+<!-- mysql,mariaDB 문법 -->
    <![CDATA[
    	select ifnull(min(seqno),0) from tbl_board where seqno > #{seqno} 
    	

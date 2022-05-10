@@ -127,8 +127,7 @@ public class MemberController {
 		MemberVO memberInfo = service.viewMemberInfo(vo);
 		model.addAttribute("view", memberInfo);
 				
-		if(a_code.equals("01")) model.addAttribute("a_code", "Master 관리자"); 
-		else if(a_code.equals("02")) model.addAttribute("a_code", "일반 사용자"); 
+		
 		 			
 	}
 	

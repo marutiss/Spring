@@ -28,10 +28,14 @@ public class BoardController {
 
 	@Inject
 	private BoardService service; //의존성 주입으로 객체 생성
+	/*private BoardService service;
+	  public BoardController(BoardService service){
+	  	this.service=service;
+	  }*/
 	
 	//미니 게시판 목록 보기
 		@RequestMapping(value = "/list", method = RequestMethod.GET)
-		public String postList(HttpSession session,Model model, @RequestParam(name="num",required=false) int num, 
+		public String getList(HttpSession session,Model model, @RequestParam(name="num",required=false) int num, 
 				@RequestParam(name="searchType", defaultValue="title", required=false) String searchType, 
 				@RequestParam(name="keyword", defaultValue="", required=false) String keyword ) throws Exception {
 			
